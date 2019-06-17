@@ -23,6 +23,12 @@ export class PerguntaComponent implements OnInit {
     this.initForm();
   }
 
+  onCheckResposta(value: any) {
+    console.log(value);
+
+    console.log(this.opcoesRespostas.get('respondida'));
+  }
+
   get opcoesRespostas(): FormArray {
     return this.formBase.get('opcoesresposta') as FormArray;
   }

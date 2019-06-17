@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { PerguntaComponent } from './pergunta.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { PerguntaComponent } from './pergunta.component';
         StepsModule,
         InputMaskModule,
         CardModule,
-        ToastModule
+        ToastModule,
+        CheckboxModule
     ]
 })
 
