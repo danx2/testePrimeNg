@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="alert">
+    <p-card header="Saúde" subheader="Questionário" [style]="{width: 'width'}" styleClass="styleClass">
+      <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+      <form [formGroup]="formBase">
+        <div class="col-xs-12 col-lg-4">
+          <div class="form-group">
+            <div formArrayName="opcoesresposta">
+              <div *ngFor="let opt of opcoesRespostas.controls; let i = index" [formGroupName]="i">
+                <input type="text" formControlName="opcaotexto" class="form-control input-sm">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>
+<p-toast position="bottom-center"></p-toast>
