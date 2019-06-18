@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { PerguntaComponent } from './pergunta.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import { CheckboxModule } from 'primeng/checkbox';
         InputMaskModule,
         CardModule,
         ToastModule,
-        CheckboxModule
+        CheckboxModule,
+        ButtonModule,
+        RadioButtonModule
     ]
 })
 

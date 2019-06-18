@@ -116,6 +116,7 @@ export class QuestionService {
         questao.perguntaid = 1;
         questao.texto = 'Qual sua idade?';
         questao.opcoesresposta = this.recuperarOpcoes(questao.perguntaid);
+        questao.multiplaescolha = true;
         this.perguntas.push(questao);
 
         questao = new Pergunta();
@@ -123,12 +124,14 @@ export class QuestionService {
         questao.texto = 'Qual seu nome?';
         questao.multiplaescolha = false;
         questao.opcoesresposta = this.recuperarOpcoes(questao.perguntaid);
+        questao.multiplaescolha = false;
         this.perguntas.push(questao);
 
         questao = new Pergunta();
         questao.perguntaid = 3;
         questao.texto = 'Qual seu sobrenome?';
         questao.opcoesresposta = this.recuperarOpcoes(questao.perguntaid);
+        questao.multiplaescolha = true;
         this.perguntas.push(questao);
     }
 }

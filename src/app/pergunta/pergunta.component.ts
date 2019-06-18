@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { MenuItem } from 'primeng/components/common/menuitem';
 import { Pergunta } from '../models/pergunta.model';
 import { QuestionService } from '../services/question.service';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { OpcoesRespostas } from '../models/opcoes-respostas.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fa-pergunta',
@@ -19,21 +20,29 @@ export class PerguntaComponent implements OnInit {
   perguntas: Pergunta[];
   terminouQuestionario = false;
 
-  constructor(private perguntaService: QuestionService, private builderForm: FormBuilder, private toastr: MessageService) {
+  constructor(
+    private perguntaService: QuestionService,
+    private builderForm: FormBuilder,
+    private toastr: MessageService,
+    private rota: Router) {
     this.initForm();
   }
 
-  onCheckResposta(value: any) {
-    console.log(value);
+  onSubmit() {
+    const model = this.formBase.getRawValue();
+    this.toastr.add({ severity: 'success', summary: '', detail: 'Salvo com sucesso!' });
+    console.log(model);
+  }
 
-    console.log(this.opcoesRespostas.get('respondida'));
+  onCheckResposta(value: boolean, id: number) {
+    this.opcoesRespostas.controls[id].patchValue({ respondida: value });
   }
 
   get opcoesRespostas(): FormArray {
     return this.formBase.get('opcoesresposta') as FormArray;
   }
 
-  carregarPergunta(perguntaId: number) {
+  private carregarPergunta(perguntaId: number) {
     const pergunta = this.perguntas.find(p => p.perguntaid === perguntaId);
 
     if (!pergunta) {
@@ -54,7 +63,9 @@ export class PerguntaComponent implements OnInit {
   private initForm() {
     this.formBase = new FormGroup({
       perguntaid: this.builderForm.control(''),
-      opcoesresposta: this.builderForm.array([])
+      opcoesresposta: this.builderForm.array([]),
+      observacaoresposta: this.builderForm.control(''),
+      multiplaescolha: this.builderForm.control('')
     });
   }
 
@@ -64,15 +75,11 @@ export class PerguntaComponent implements OnInit {
     novaResposta = this.builderForm.group({
       opcaoid: this.builderForm.control(opcoes.opcaoid),
       opcaotexto: this.builderForm.control(opcoes.opcaotexto),
-      respondida: this.builderForm.control(opcoes.respondida),
+      respondida: this.builderForm.control(opcoes.respondida, Validators.requiredTrue),
       perguntaid: this.builderForm.control(opcoes.perguntaid)
     });
 
     return novaResposta;
-  }
-
-  private cleanOpcoes() {
-    this.formBase.get('novaResposta').reset();
   }
 
   private loadQuestion() {

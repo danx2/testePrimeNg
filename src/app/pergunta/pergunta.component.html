@@ -7,16 +7,27 @@
           <div class="form-group">
             <div formArrayName="opcoesresposta">
               <div *ngFor="let opt of opcoesRespostas.controls; let i = index" [formGroupName]="i">
-                <!-- <input type="text" formControlName="opcaotexto" class="form-control input-sm"> -->
-                <p-checkbox label="{{opt.get('opcaotexto').value}}" (onChange)="onCheckResposta($event)"
-                  value="{{opt.get('respondida').value}}" [formControl]="opt.get('respondida')"></p-checkbox>
+
+                <ng-container *ngIf="formBase.get('multiplaescolha').value === false">
+                  <p-radioButton name="i" value="{{opt.get('respondida').value}}" label="{{opt.get('opcaotexto').value}}"
+                  formControlName="respondida">
+                  </p-radioButton>
+                </ng-container>
+                <ng-container *ngIf="formBase.get('multiplaescolha').value === true">
+                  <p-checkbox label="{{opt.get('opcaotexto').value}}" (onChange)="onCheckResposta($event, i)"
+                    value="{{opt.get('respondida').value}}" [formControl]="opt.get('respondida')" binary="true"
+                    styleClass="steps"></p-checkbox>
+                </ng-container>
               </div>
             </div>
-            {{opcoesRespostas.get('respondida') | json}}
           </div>
         </div>
+
+        <p-button label="Responder" (onClick)="onSubmit()" [disabled]="opcoesRespostas.invalid"></p-button>
       </form>
+      <p-button icon="pi pi-iconName" *ngIf="terminouQuestionario" label="Finalizar Questionário"></p-button>
     </p-card>
   </div>
 </div>
+
 <p-toast position="bottom-center"></p-toast>
